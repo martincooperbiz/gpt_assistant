@@ -1,0 +1,4 @@
+openai==v1.3.4
+streamlit
+streamlit-chat
+python-dotenv
