@@ -7,12 +7,14 @@ import streamlit as st
 from streamlit_chat import message as st_message
 from openai import OpenAI
 
-load_dotenv()
+# Add your API key and assistant ID directly
+openai_api_key = '<your-key>'
+assistant_id = '<your-assistant-id>'
+
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 
-openai_api_key = os.getenv("OPENAI_API_KEY")
-assistant_id = os.getenv("OPENAI_ASSISTANT_ID")
+
 
 st.set_page_config(
     page_title='OpenAI Assistant',
