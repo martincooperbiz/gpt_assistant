@@ -1,13 +1,7 @@
 import time
 import logging
-import os
-
 import streamlit as st
 from openai import OpenAI
-
-# Add your API key and assistant ID directly
-openai_api_key = '<your-key>'
-assistant_id = '<your-assistant-id>'
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
@@ -16,17 +10,9 @@ st.set_page_config(
     layout='centered',
 )
 
-st.markdown("""
-    <style>
-        .reportview-container {
-            margin-top: -2em;
-        }
-        #MainMenu {visibility: hidden;}
-        .stDeployButton {display:none;}
-        footer {visibility: hidden;}
-        #stDecoration {display:none;}
-    </style>
-""", unsafe_allow_html=True)
+# Input fields for OpenAI API key and assistant ID
+openai_api_key = st.text_input("Enter your OpenAI API key:", type="password")
+assistant_id = st.text_input("Enter your OpenAI Assistant ID:")
 
 client = OpenAI(api_key=openai_api_key)
 
@@ -36,10 +22,6 @@ def wait_on_run(run, thread_id):
         logging.info(f"Run Status: {run.status}")
         time.sleep(0.5)
     return run
-
-def st_message(message, is_user):
-    role = "You" if is_user else "Assistant"
-    st.text(f"{role}: {message}")
 
 def send_message():
     if st.session_state.user_input and st.session_state.thread_id:
@@ -89,7 +71,7 @@ def app():
 
     # Display chat messages
     for chat_message in st.session_state.messages:
-        st_message(chat_message['message'], is_user=chat_message['is_user'])
+        st.text(f"{chat_message['message']}")
 
     # User Input
     st.text_input("Ask a question:", key="user_input", on_change=send_message, placeholder="Press enter to send")
