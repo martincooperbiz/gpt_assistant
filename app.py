@@ -1,10 +1,8 @@
 import time
 import logging
 import os
-from dotenv import load_dotenv
 
 import streamlit as st
-from streamlit_chat import message as st_message
 from openai import OpenAI
 
 # Add your API key and assistant ID directly
@@ -12,9 +10,6 @@ openai_api_key = '<your-key>'
 assistant_id = '<your-assistant-id>'
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-
-
-
 
 st.set_page_config(
     page_title='OpenAI Assistant',
@@ -41,6 +36,10 @@ def wait_on_run(run, thread_id):
         logging.info(f"Run Status: {run.status}")
         time.sleep(0.5)
     return run
+
+def st_message(message, is_user):
+    role = "You" if is_user else "Assistant"
+    st.text(f"{role}: {message}")
 
 def send_message():
     if st.session_state.user_input and st.session_state.thread_id:
